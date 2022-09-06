@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
@@ -14,8 +15,12 @@ import { FormControl, Validators } from '@angular/forms';
           </div>
         </div>
         <div class="input">
-          <span>Password:</span> <input type="text" [formControl]="password" />
+          <span>Password:</span>
+          <input type="password" [formControl]="password" />
         </div>
+        <span class="buttonSpan">
+          <button class="button" (click)="submit()">Submit</button></span
+        >
       </div>
     </div>
   `,
@@ -25,13 +30,22 @@ export class AppComponent {
   username: FormControl;
   password: FormControl;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.username = new FormControl('', Validators.email);
     this.password = new FormControl('');
   }
 
-  ngOnChanges() {
-    console.log('username', this.username);
-    console.log('password', this.password);
+  async submit(): Promise<void> {
+    const body = {
+      username: this.username,
+      password: this.password,
+      token: 1234,
+    };
+
+    const response = await this.http
+      .post('http://localhost:3030/login', body)
+      .subscribe();
+
+    console.log('response', response);
   }
 }

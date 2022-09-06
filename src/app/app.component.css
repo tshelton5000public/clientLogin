@@ -23,6 +23,12 @@
   margin: 25px 0 100px 0;
 }
 
-.inputLabel{
+.input{
   margin: 10px 25px;
+}
+
+.buttonSpan{
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 0 100px;
 }
