@@ -37,15 +37,23 @@ export class AppComponent {
 
   async submit(): Promise<void> {
     const body = {
-      username: this.username,
-      password: this.password,
-      token: 1234,
+      username: this.username.value,
+      password: this.password.value,
+      token: this.getRequestToken(),
     };
 
-    const response = await this.http
+    this.http
       .post('http://localhost:3030/login', body)
-      .subscribe();
+      .subscribe(this.handleSubmissionSuccess);
+  }
 
-    console.log('response', response);
+  private getRequestToken(): number {
+    const date = new Date();
+
+    return date.getHours() * 100 + date.getMinutes();
+  }
+
+  private handleSubmissionSuccess(): void {
+    window.location.href = 'http://onecause.com';
   }
 }
